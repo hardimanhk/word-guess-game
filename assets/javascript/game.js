@@ -4,6 +4,7 @@ var guesses = [];
 var currentGuess = "a";
 var emptyArray = [];
 var guessRemain = 0;
+var correctGuess = 0;
 var wordOptions = ["HARRY", "WEASLEY", "HERMIONE", "DUMBLEDORE", "VOLDEMORT",
     "HAGRID", "MCGONAGALL", "WOOD", "SNAPE", "SEVERUS", "DRACO", "MALFOY",
     "LUCIUS", "NARCISSA", "FIRENZE", "RIDDLE", "MARVOLO", "FLITWICK", "ARAGOG",
@@ -20,6 +21,7 @@ console.log(computerChoice);
 function reset() {
     guesses = [];
     guessRemain = 15;
+    emptyArray = []
     // select word from the wordOptions arrays
     computerChoice = wordOptions[Math.floor(Math.random() * wordOptions.length)];
     // create an empty array to be the "current word"
@@ -58,7 +60,7 @@ document.onkeyup = function (event) {
         guesses.push(currentGuess);
         console.log(guesses);
     }
-    else {
+    else if (computerChoice.indexOf(currentGuess) !== -1)  {
         // old code only replaced one instance of the char
         // if it is in the array add to the current word on screen
         //var index = computerChoice.indexOf(currentGuess);
@@ -68,6 +70,13 @@ document.onkeyup = function (event) {
         var computerChoiceArray = computerChoice.split("");
         console.log(emptyArray.toString());
         computerChoiceArray.forEach(function(item, i) { if (item == currentGuess) emptyArray[i] = currentGuess; });
+        correctGuess++;
+    }
+    if (guessRemain === 0) {
+        reset();
+    }
+    if (emptyArray.indexOf("_ ") === -1) {
+        reset();
     }
     var guessDisplay = guesses.join(" ");
     var emptyString = emptyArray.join(" ");
