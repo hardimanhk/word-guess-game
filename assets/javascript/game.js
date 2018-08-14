@@ -16,13 +16,17 @@ var wordOptions = ["HARRY", "WEASLEY", "HERMIONE", "DUMBLEDORE", "VOLDEMORT",
 var computerChoice = "nothing";
 console.log(computerChoice);
 
+// reset function to reset the game without refreshing page
 function reset() {
     guesses = [];
     guessRemain = 15;
+    // select word from the wordOptions arrays
     computerChoice = wordOptions[Math.floor(Math.random() * wordOptions.length)];
+    // create an empty array to be the "current word"
     for (var i = 0; i < computerChoice.length; i++) {
         emptyArray.push("_ ");
     }
+    // make "current word" show up with no comma seperators 
     var emptyString = emptyArray.join(" ");
     var html =
         "<p>Press any key to get started!</p>" +
@@ -33,25 +37,37 @@ function reset() {
         "<p>" + guessRemain + "</p>" +
         "<p>Letters already guessed:</p>" +
         "<p>" + guesses + "</p>";
+    // show new HTML
     document.getElementById("game").innerHTML = html;
     console.log(computerChoice + " inside reset");
     console.log(emptyString + " inside reset");
 }
 
+// call reset to grab the first word
 reset();
 
+// event space
 document.onkeyup = function (event) {
     console.log(computerChoice + " inside event");
+    // declare the first letter choice and make uppercase 
     currentGuess = event.key.toUpperCase();
+    // decrement guesses EACH TIME any key is pressed
     guessRemain--;
+    // see if the user choice exists in the word the computer chose
     if (computerChoice.indexOf(currentGuess) === -1) {
         guesses.push(currentGuess);
         console.log(guesses);
     }
     else {
-        var index = computerChoice.indexOf(currentGuess);
-        emptyArray[index] = currentGuess;
+        // old code only replaced one instance of the char
+        // if it is in the array add to the current word on screen
+        //var index = computerChoice.indexOf(currentGuess);
+        //emptyArray[index] = currentGuess;
+
+        // new code replaces all instances of the char
+        var computerChoiceArray = computerChoice.split("");
         console.log(emptyArray.toString());
+        computerChoiceArray.forEach(function(item, i) { if (item == currentGuess) emptyArray[i] = currentGuess; });
     }
     var guessDisplay = guesses.join(" ");
     var emptyString = emptyArray.join(" ");
