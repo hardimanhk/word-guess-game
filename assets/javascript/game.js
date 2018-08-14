@@ -4,7 +4,6 @@ var guesses = [];
 var currentGuess = "a";
 var emptyArray = [];
 var guessRemain = 0;
-var correctGuess = 0;
 var wordOptions = ["HARRY", "WEASLEY", "HERMIONE", "DUMBLEDORE", "VOLDEMORT",
     "HAGRID", "MCGONAGALL", "WOOD", "SNAPE", "SEVERUS", "DRACO", "MALFOY",
     "LUCIUS", "NARCISSA", "FIRENZE", "RIDDLE", "MARVOLO", "FLITWICK", "ARAGOG",
@@ -53,14 +52,15 @@ document.onkeyup = function (event) {
     console.log(computerChoice + " inside event");
     // declare the first letter choice and make uppercase 
     currentGuess = event.key.toUpperCase();
-    // decrement guesses EACH TIME any key is pressed
-    guessRemain--;
-    // see if the user choice exists in the word the computer chose
-    if (computerChoice.indexOf(currentGuess) === -1) {
+
+
+    // see if the user choice exists in the word and letter has not been guessed 
+    if ((computerChoice.indexOf(currentGuess) === -1) && (guesses.indexOf(currentGuess) === -1)) {
         guesses.push(currentGuess);
         console.log(guesses);
     }
-    else if (computerChoice.indexOf(currentGuess) !== -1)  {
+    else if ((computerChoice.indexOf(currentGuess) !== -1) && (guesses.indexOf(currentGuess) === -1) && (emptyArray.indexOf(currentGuess) === -1))  {
+        console.log(guesses.indexOf(currentGuess) + "this is the index of current guess");
         // old code only replaced one instance of the char
         // if it is in the array add to the current word on screen
         //var index = computerChoice.indexOf(currentGuess);
@@ -70,12 +70,14 @@ document.onkeyup = function (event) {
         var computerChoiceArray = computerChoice.split("");
         console.log(emptyArray.toString());
         computerChoiceArray.forEach(function(item, i) { if (item == currentGuess) emptyArray[i] = currentGuess; });
-        correctGuess++;
+        // decrement guesses
+        guessRemain--;
     }
     if (guessRemain === 0) {
         reset();
     }
     if (emptyArray.indexOf("_ ") === -1) {
+        wins++;
         reset();
     }
     var guessDisplay = guesses.join(" ");
