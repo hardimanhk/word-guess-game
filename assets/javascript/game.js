@@ -38,7 +38,6 @@ function reset() {
         "<p>" + guessRemain + "</p>" +
         "<p>Letters already guessed:</p>" +
         "<p>" + guesses + "</p>";
-    // show new HTML
     document.getElementById("game").innerHTML = html;
     console.log(computerChoice + " inside reset");
     console.log(emptyString + " inside reset");
@@ -55,9 +54,10 @@ document.onkeyup = function (event) {
 
 
     // see if the user choice exists in the word and letter has not been guessed 
-    if ((computerChoice.indexOf(currentGuess) === -1) && (guesses.indexOf(currentGuess) === -1)) {
+    if ((computerChoice.indexOf(currentGuess) === -1) && (guesses.indexOf(currentGuess) === -1) && (emptyArray.indexOf(currentGuess) === -1)) {
         guesses.push(currentGuess);
         console.log(guesses);
+        guessRemain--;
     }
     else if ((computerChoice.indexOf(currentGuess) !== -1) && (guesses.indexOf(currentGuess) === -1) && (emptyArray.indexOf(currentGuess) === -1))  {
         console.log(guesses.indexOf(currentGuess) + "this is the index of current guess");
@@ -73,7 +73,7 @@ document.onkeyup = function (event) {
         // decrement guesses
         guessRemain--;
     }
-    if (guessRemain === 0) {
+    if (guessRemain === 0 && emptyArray.indexOf("_ ") !== -1) {
         reset();
     }
     if (emptyArray.indexOf("_ ") === -1) {
@@ -93,7 +93,10 @@ document.onkeyup = function (event) {
     "<p>Letters already guessed:</p>" +
     "<p>" + guessDisplay + "</p>";
     document.getElementById("game").innerHTML = html;
+
 }
+
+
 
 
 //console.log(emptyString);
