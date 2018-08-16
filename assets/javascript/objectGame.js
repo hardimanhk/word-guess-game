@@ -10,6 +10,7 @@
 //            "<p>" + game.guesses + "</p>";
 var html = "<p>Press any key to begin!</p>";
 var userGuess = "";
+var index = 0;
 //game object 
 var game = {
     wins: 0,
@@ -24,9 +25,12 @@ var game = {
     "MOLLY", "BELLATRIX", "DOBBY", "KREACHER", "BUCKBEAK", "HEDWIG", "WORMTAIL",
     "GRYFFINDOR", "SLYTHERIN", "RAVENCLAW", "HUFFLEPUFF", "MOODY", "SPROUT",
     "FILCH", "CHO", "GOYLE", "CRABBE", "POTTER"],
+    photos: ["harry-potter.jpg", "weasleyPic.jpg", "hermione.jpg", "dumbledor1.jpg", "vol4.jpg"],
+    songs: [],
     compChoice: "",
     pickWord: function() {
-        game.compChoice = game.choices[Math.floor(Math.random() * game.choices.length)];
+        index = Math.floor(Math.random() * 5);//game.choices.length);
+        game.compChoice = game.choices[index];
     },
     blanks: function() {
         for (var i = 0; i < game.compChoice.length; i++) {
@@ -77,6 +81,7 @@ document.onkeyup = function (event) {
     }
 
     if (game.guessRemain === 0 || game.emptyWord.indexOf("_ ") === -1) {
+        document.getElementById("image").src = "assets/image/" + game.photos[index];
         game.reset();
     }
 
