@@ -13,11 +13,11 @@ h1, p, h2 {
 }
 
 #image {
-    padding-top: 200px;
-    padding-left: 37%;
-    height: 100px;
-    width: 350px;
-    float: left;
+    position: relative;
+    top: 0;
+    left: 200px;
+    right: 200px;
+    height: 300px;
 }
 
 #game {
